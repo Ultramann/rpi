@@ -1,3 +1,10 @@
+## TODO
+* Make bluetooth connection sysstem unit, currently in rc.local.
+* Set TERM to xterm-256color
+* Emacs
+    * Projectile
+    * Deamon, will reload work in this?
+
 ## Changefont
 	```
 	sudo dpkg-reconfigure console-setup
@@ -17,6 +24,51 @@ Running `date` seems just to look at the file `/etc/localtime`. So you can just 
 	```
 	sudo systemctl enable ssh && sudo systemctl start ssh
 	```
+## Emacs
+### w3m
+Install w3m: `sudo apt-get install w3m`.
+
+## Docker
+Installation instructions mostly from:
+	`https://withblue.ink/2019/07/13/yes-you-can-run-docker-on-raspbian.html`
+
+### Install
+	```
+	sudo apt update
+	sudo apt install -y \
+	     apt-transport-https \
+	     ca-certificates \
+	     curl \
+	     gnupg2 \
+	     software-properties-common
+	
+	curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | sudo apt-key add -
+	echo "deb [arch=armhf] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+	     $(lsb_release -cs) stable" | \
+	    sudo tee /etc/apt/sources.list.d/docker.list
+	
+	sudo apt update
+	sudo apt install -y --no-install-recommends \
+	    docker-ce \
+	    cgroupfs-mount
+	
+	sudo systemctl enable docker
+	sudo systemctl start docker
+	
+	sudo usermod -aG docker ${USER}
+	```
+
+### Add User to Docker Group
+`sudo usermod -aG docker <user_name>`
+
+### Install Doocker Compose
+No install for arm, can install with pip
+	```
+	sudo apt update
+	sudo apt install -y python3-pip libffi-dev
+	sudo pip3 install docker-compose
+	```
+
 
 ## Bluetooth
 Configuration happens through `bluetoothctl`.
@@ -28,7 +80,9 @@ Added convience script, /usr/local/sbin/ck`, below, for easy connection to bluet
 	```
 
 ## Keyboard:
-Change file `etc/defaults/keyboard` to have `XKBLAYOUT="us"`
+Change file `etc/defaults/keyboard` to have:
+* `XKBLAYOUT="us"`
+* `XKBOPTIONS="caps:escape"`
 
 ## Boot Sequence
 
@@ -43,11 +97,14 @@ On inspecting `/var/log/syslog` it seems that the crontab reboot commands run be
 
 #### rc.local
 Putting full path to ck in this file runs it toward the end of the boot!
-*TODO* Want to make this a system unit, cause that's the "right way" to do it.
 
-### init.d
+## init.d
 Seems all init.d does is softlink files into `/etc/rc<num>.d/` depending on the comment header in the init file.
 It's setup with update-rc.d (or something like that), which I think just sets up those softlinks.
 
-### rc.local
+## rc.local
 There's a file, rc.local, whos commands run after every rc.d file...I think.
+
+## systemd.service
+
+`man systemd.service`
