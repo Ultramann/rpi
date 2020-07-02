@@ -25,6 +25,20 @@ Running `date` seems just to look at the file `/etc/localtime`. So you can just 
 	sudo systemctl enable ssh && sudo systemctl start ssh
 	```
 ## Emacs
+## Daemon
+### Currently Not Using, Using Screen Instead
+*It seems that moving between dired directories quits out of the buffer, so it closes the emacs client session*
+
+Run: `systemctl --user enable emacs`. This seems to symlink from `~/config/systemd/user/default.target.wants/emacs.service' to '/usr/lib/systemd/user/emacs.service`.
+
+So it seems that there's user specific systemd settings kept in `~/conf/systemd/user` and that programs like emacs save their default system units to `/usr/lib/systemd`. The fact that emacs was in `/usr/lib/systemd/user` probably is what lead systemctl to make a `~/config/systemd/user` directory when I asked it to enable emacs for my user.
+
+### Screen
+`sudo apt install screen`
+
+To get emacs colors working had to add `~/.sreenrc` file with: `term xterm-256color`.
+Since I'm only really using it to keep emacs running between sessions, also added this alias to `.bashrc`: `alias screen='screen -R emacs'`.
+
 ### w3m
 Install w3m: `sudo apt-get install w3m`.
 
@@ -61,14 +75,13 @@ Installation instructions mostly from:
 ### Add User to Docker Group
 `sudo usermod -aG docker <user_name>`
 
-### Install Doocker Compose
+### Install Docker Compose
 No install for arm, can install with pip
 	```
 	sudo apt update
 	sudo apt install -y python3-pip libffi-dev
 	sudo pip3 install docker-compose
 	```
-
 
 ## Bluetooth
 Configuration happens through `bluetoothctl`.
@@ -96,7 +109,7 @@ When trying to auto connect to keyboard at boot, first tried to add to `/etc/cro
 On inspecting `/var/log/syslog` it seems that the crontab reboot commands run before the bluetooth device is set up.
 
 #### rc.local
-Putting full path to ck in this file runs it toward the end of the boot!
+Putting full path to ck in this file runs it toward the end of the boot! *Currently not using. Have Pok3r wired in instead.*
 
 ## init.d
 Seems all init.d does is softlink files into `/etc/rc<num>.d/` depending on the comment header in the init file.
