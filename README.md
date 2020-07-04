@@ -5,6 +5,13 @@
     * Projectile
     * Deamon, will reload work in this?
 
+## Xterm
+Seems that xterm **requires** an xwindow system. I guess this makes sense.
+
+	```
+	sudo apt install xinit
+	```
+
 ## Changefont
 	```
 	sudo dpkg-reconfigure console-setup
@@ -24,6 +31,7 @@ Running `date` seems just to look at the file `/etc/localtime`. So you can just 
 	```
 	sudo systemctl enable ssh && sudo systemctl start ssh
 	```
+
 ## Emacs
 ## Daemon
 ### Currently Not Using, Using Screen Instead
