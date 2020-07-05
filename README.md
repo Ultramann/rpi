@@ -11,6 +11,7 @@ Seems that xterm **requires** an xwindow system. I guess this makes sense.
 	```
 	sudo apt install xinit
 	```
+Now can run single program with xinit: `xinit <program>`. Note: if the program doesn't run in fullscreen mode then it won't be selected by the xwindow system. e.g. emacs must automatically launch into fullscreen.
 
 ## Changefont
 	```
@@ -19,7 +20,16 @@ Seems that xterm **requires** an xwindow system. I guess this makes sense.
 This auto changed the font on the current terminal, but supposedly it needs `setupcon`
 to be run for the changes to take effect.
 
-Configuration lives at `etc/default/console-setup`.
+Configuration lives at `/etc/default/console-setup`.
+
+## Add Font
+Add Menlo/Monaco:
+	```
+	curl -O https://raw.githubusercontent.com/hbin/top-programming-fonts/master/(Menlo-Regular|Monaco-Linux).ttf
+	mv (Menlo-Regular|Monaco-Linux).ttf /usr/share/fonts/type1/gsfonts
+	fc-cache -fv
+	fc-list
+	```
 
 ## Local Time
 Running `date` seems just to look at the file `/etc/localtime`. So you can just update that file. Seems like `localtime` is just a softlink to one of many files that have timezone info in them.
