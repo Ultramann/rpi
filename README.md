@@ -45,7 +45,7 @@ Running `date` seems just to look at the file `/etc/localtime`. So you can just 
 ## Emacs
 ## Daemon
 ### Currently Not Using, Using Screen Instead
-*It seems that moving between dired directories quits out of the buffer, so it closes the emacs client session*
+**It seems that moving between dired directories quits out of the buffer, so it closes the emacs client session**
 
 Run: `systemctl --user enable emacs`. This seems to symlink from `~/config/systemd/user/default.target.wants/emacs.service' to '/usr/lib/systemd/user/emacs.service`.
 
@@ -111,6 +111,7 @@ Added convience script, /usr/local/sbin/ck`, below, for easy connection to bluet
 	```
 
 ## Keyboard:
+**This is not nessary any more with the Pok3r wired in.**
 Change file `etc/defaults/keyboard` to have:
 * `XKBLAYOUT="us"`
 * `XKBOPTIONS="caps:escape"`
@@ -127,7 +128,7 @@ When trying to auto connect to keyboard at boot, first tried to add to `/etc/cro
 On inspecting `/var/log/syslog` it seems that the crontab reboot commands run before the bluetooth device is set up.
 
 #### rc.local
-Putting full path to ck in this file runs it toward the end of the boot! *Currently not using. Have Pok3r wired in instead.*
+Putting full path to ck in this file runs it toward the end of the boot! **Currently not using. Have Pok3r wired in instead.**
 
 ## init.d
 Seems all init.d does is softlink files into `/etc/rc<num>.d/` depending on the comment header in the init file.
